@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   test:
     uses: ns-github-design/ci-platform/.github/workflows/test-python.yml@v1
