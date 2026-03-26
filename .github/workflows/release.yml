@@ -1,0 +1,32 @@
+name: release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    uses: ns-github-design/ci-platform/.github/workflows/test-python.yml@v1
+
+  build:
+    needs: test
+    uses: ns-github-design/ci-platform/.github/workflows/build.yml@v1
+    secrets: inherit
+
+  deploy-staging:
+    needs: build
+    uses: ns-github-design/ci-platform/.github/workflows/deploy.yml@v1
+    with:
+      environment: staging
+      image_tag: ${{ needs.build.outputs.image_tag }}
+      app_name: my-app-staging
+    secrets: inherit
+
+  deploy-prod:
+    needs: deploy-staging
+    uses: ns-github-design/ci-platform/.github/workflows/deploy.yml@v1
+    with:
+      environment: production
+      image_tag: ${{ needs.build.outputs.image_tag }}
+      app_name: my-app-prod
+    secrets: inherit
