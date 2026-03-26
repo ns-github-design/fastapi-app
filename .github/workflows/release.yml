@@ -23,7 +23,7 @@ jobs:
     secrets: inherit
 
   deploy-prod:
-    needs: deploy-staging
+    needs: [build, deploy-staging]
     uses: ns-github-design/ci-platform/.github/workflows/deploy.yml@v1
     with:
       environment: production
