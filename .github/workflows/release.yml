@@ -10,12 +10,11 @@ permissions:
 
 jobs:
   test:
-    uses: ns-github-design/ci-platform/.github/workflows/deploy.yml@v2
-    
+    uses: ns-github-design/ci-platform/.github/workflows/test-python.yml@v2
 
   build:
     needs: test
-    uses: ns-github-design/ci-platform/.github/workflows/deploy.yml@v2
+    uses: ns-github-design/ci-platform/.github/workflows/build.yml@v2
     secrets: inherit
 
   deploy-staging:
